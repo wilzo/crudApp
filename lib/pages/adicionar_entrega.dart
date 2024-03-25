@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_projeto/services/entrega.dart';
 import 'package:flutter_projeto/services/userservices.dart'; // Importe a classe FirestoreService aqui
 
 class AdicionarEntregaPage extends StatefulWidget {

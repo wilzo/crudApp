@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_projeto/services/entrega.dart';
 import 'package:flutter_projeto/services/userservices.dart';
 import 'package:flutter_projeto/pages/edit_entrega_screen.dart';
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/entregas': (context) => EntregasPage(),
         '/adicionar_entrega': (context) => AdicionarEntregaPage(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -102,6 +104,11 @@ class EntregasPage extends StatelessWidget {
                 final entrega =
                     snapshot.data?.docs[index].data() as Map<String, dynamic>?;
 
+                Map<String, dynamic> transactionFinMap =
+                    snapshot.data!.docs[index].data() as Map<String, dynamic>;
+
+                Entrega entregaItem = Entrega.fromMap(transactionFinMap);
+
                 return ListTile(
                   title: Text(entrega != null && entrega.containsKey('cliente')
                       ? entrega['cliente']
@@ -124,9 +131,13 @@ class EntregasPage extends StatelessWidget {
                           },
                         )
                       : const SizedBox(),
+                  onTap: () {
+                    print(entregaItem.id);
+                  },
                   onLongPress: () {
-                    if (entrega != null && entrega.containsKey('id')) {
-                      firestoreService.deleteEntrega(entrega['id']);
+                    print('Entrega removida: ${entregaItem.id}');
+                    if (entrega != null && entregaItem.id != null) {
+                      firestoreService.deleteEntrega(entregaItem.id as String);
                     }
                   },
                 );
