@@ -131,11 +131,7 @@ class EntregasPage extends StatelessWidget {
                           },
                         )
                       : const SizedBox(),
-                  onTap: () {
-                    print(entregaItem.id);
-                  },
                   onLongPress: () {
-                    print('Entrega removida: ${entregaItem.id}');
                     if (entrega != null && entregaItem.id != null) {
                       firestoreService.deleteEntrega(entregaItem.id as String);
                     }
